@@ -24,8 +24,8 @@ void ARocket::SetTarget(int Index) {
 void ARocket::BeginPlay() {
 	Super::BeginPlay();
 	RootComponent = Cast<UShapeComponent>(GetRootComponent());
-	for (AActor Target : Targets) {
-		TargetPositions.Add(Target.GetActorLocation());
+	for (const AActor* Target : Targets) {
+		TargetPositions.Add(Target->GetActorLocation());
 	}
 }
 
