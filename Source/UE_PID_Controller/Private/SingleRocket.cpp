@@ -10,9 +10,16 @@ ASingleRocket::ASingleRocket() {}
 
 void ASingleRocket::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+	if (TargetPositions.Num() > 0) {
+		UStaticMeshComponent* Mesh = Cast<UStaticMeshComponent>(GetRootComponent());
+		const float Throttle = GetController()->Update(DeltaTime, Mesh->GetComponentLocation().Z, TargetPosition.Z);
+		if (IsValid(Mesh)) {
+			// RootComponent->AddForce(FVector(0, 0, Throttle * Power));
+			Mesh->AddForce(FVector(0, 0, Throttle * Power));
+		}
 
-	const float Throttle = GetController()->Update(DeltaTime, GetActorLocation().Z, TargetPosition.Z);
-	RootComponent->AddForce(FVector(0, 0, Throttle * Power));
-
-	SetScale(Flame, Throttle);
+		if (IsValid(Flame)) {
+			SetScale(Flame, Throttle);
+		}
+	}
 }

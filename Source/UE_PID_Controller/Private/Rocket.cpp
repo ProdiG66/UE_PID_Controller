@@ -18,12 +18,16 @@ UPIDController* ARocket::GetController() {
 }
 
 void ARocket::SetTarget(int Index) {
-	TargetPosition = TargetPositions[Index];
+	UE_LOG(LogTemp, Warning, TEXT("Index: %i"), Index);
+	if (Index < TargetPositions.Num()) {
+		TargetPosition = TargetPositions[Index];
+		UE_LOG(LogTemp, Warning, TEXT("Target: %i | TargetPosition: %f, %f, %f"), Index, TargetPosition.X,
+				TargetPosition.Y, TargetPosition.Z);
+	}
 }
 
 void ARocket::BeginPlay() {
 	Super::BeginPlay();
-	RootComponent = Cast<UShapeComponent>(GetRootComponent());
 	for (const AActor* Target : Targets) {
 		TargetPositions.Add(Target->GetActorLocation());
 	}
