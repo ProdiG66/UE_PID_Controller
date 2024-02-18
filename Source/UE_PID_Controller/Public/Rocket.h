@@ -24,6 +24,8 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Components")
+	UStaticMeshComponent* Mesh;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="PID")
 	UPIDController* Controller;
 	UPROPERTY(EditAnywhere, Category="Targets")
@@ -31,5 +33,5 @@ protected:
 	TArray<FVector> TargetPositions;
 	UPROPERTY(EditAnywhere, Category="Targets")
 	FVector TargetPosition;
-	void SetScale(UStaticMeshComponent* Mesh, float Scale);
+	void SetThrust(UParticleSystemComponent* Particles, float Thrust);
 };

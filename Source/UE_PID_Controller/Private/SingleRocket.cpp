@@ -5,21 +5,24 @@
 
 #include "PIDController.h"
 #include "Components/ShapeComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
-ASingleRocket::ASingleRocket() {}
+ASingleRocket::ASingleRocket() {
+	Flame = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Flame"));
+	Flame->SetupAttachment(RootComponent);
+	Flame->SetRelativeRotation(FRotator(0, 0, 180));
+}
 
 void ASingleRocket::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 	if (TargetPositions.Num() > 0) {
-		UStaticMeshComponent* Mesh = Cast<UStaticMeshComponent>(GetRootComponent());
 		const float Throttle = GetController()->Update(DeltaTime, Mesh->GetComponentLocation().Z, TargetPosition.Z);
 		if (IsValid(Mesh)) {
-			// RootComponent->AddForce(FVector(0, 0, Throttle * Power));
 			Mesh->AddForce(FVector(0, 0, Throttle * Power));
 		}
 
 		if (IsValid(Flame)) {
-			SetScale(Flame, Throttle);
+			SetThrust(Flame, Throttle);
 		}
 	}
 }

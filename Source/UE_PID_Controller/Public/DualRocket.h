@@ -13,9 +13,9 @@ class UE_PID_CONTROLLER_API ADualRocket : public ARocket {
 
 public:
 	ADualRocket();
-	UPROPERTY(EditAnywhere, Category="Components")
-	UStaticMeshComponent* FlamePositive;
-	UPROPERTY(EditAnywhere, Category="Components")
-	UStaticMeshComponent* FlameNegative;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Components")
+	UParticleSystemComponent* FlamePositive;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Components")
+	UParticleSystemComponent* FlameNegative;
 	virtual void Tick(float DeltaTime) override;
 };

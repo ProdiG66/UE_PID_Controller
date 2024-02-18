@@ -5,25 +5,31 @@
 #include "PIDController.h"
 #include "Misc/App.h"
 #include "Components/ShapeComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
-ADualRocket::ADualRocket() : ARocket() {}
+ADualRocket::ADualRocket() {
+	FlamePositive = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Right"));
+	FlamePositive->SetupAttachment(RootComponent);
+	FlamePositive->SetRelativeRotation(FRotator(0, 0, 90));
+	FlameNegative = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Left"));
+	FlameNegative->SetupAttachment(RootComponent);
+	FlameNegative->SetRelativeRotation(FRotator(0, 0, 270));
+}
 
 void ADualRocket::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	if (TargetPositions.Num() > 0) {
-		UStaticMeshComponent* Mesh = Cast<UStaticMeshComponent>(GetRootComponent());
 		const float Throttle = GetController()->Update(DeltaTime, Mesh->GetComponentLocation().Y, TargetPosition.Y);
 		if (IsValid(Mesh)) {
 			Mesh->AddForce(FVector(0, Throttle * Power, 0));
-			// this->SetActorLocation(TargetPosition);
 		}
 
 		if (IsValid(FlamePositive)) {
-			SetScale(FlamePositive, -Throttle);
+			SetThrust(FlamePositive, -Throttle);
 		}
 		if (IsValid(FlameNegative)) {
-			SetScale(FlameNegative, Throttle);
+			SetThrust(FlameNegative, Throttle);
 		}
 	}
 }

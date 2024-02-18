@@ -5,12 +5,20 @@
 
 #include "PIDController.h"
 #include "Components/ShapeComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
-// Sets default values
 ARocket::ARocket() {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	Controller = CreateDefaultSubobject<UPIDController>(TEXT("PID Controller"));
+	Controller->ProportionalGain = 6;
+	Controller->IntegralGain = 1;
+	Controller->DerivativeGain = 10;
+	Controller->IntegralSaturation = 0.5;
+	Controller->DerivativeMeasurement = EDerivativeMeasurement::ErrorRateOfChange;
+	Power = 100;
+	FlameSize = 1;
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RocketMesh"));
+	SetRootComponent(Mesh);
 }
 
 UPIDController* ARocket::GetController() {
@@ -33,14 +41,16 @@ void ARocket::BeginPlay() {
 	}
 }
 
-void ARocket::SetScale(UStaticMeshComponent* Mesh, float Scale) {
-	Scale = FMath::Clamp(Scale, 0.0f, 1.0f);
+void ARocket::SetThrust(UParticleSystemComponent* Particles, float Thrust) {
+	Thrust = FMath::Clamp(Thrust, 0.0f, 1.0f);
 
-	if (Scale < 0.1f) {
-		Mesh->SetActive(false);
+	Particles->SetFloatParameter(FName("Rate"), Thrust);
+	Particles->SetFloatParameter(FName("Velocity"), Thrust);
+	Particles->SetVectorParameter(FName("Velocity"), FVector(Thrust));
+	if (Thrust < 0.01f) {
+		Particles->SetActive(false);
 	}
 	else {
-		Mesh->SetActive(true);
-		Mesh->SetRelativeScale3D(FVector(Scale * FlameSize));
+		Particles->SetActive(true);
 	}
 }

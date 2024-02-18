@@ -12,9 +12,8 @@ class UE_PID_CONTROLLER_API ASingleRocket : public ARocket {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
 	ASingleRocket();
-	UPROPERTY(EditAnywhere, Category="Components")
-	UStaticMeshComponent* Flame;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Components")
+	UParticleSystemComponent* Flame;
 	virtual void Tick(float DeltaTime) override;
 };
