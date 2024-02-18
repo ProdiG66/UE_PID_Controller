@@ -13,21 +13,23 @@ class UE_PID_CONTROLLER_API ARocket : public AActor {
 
 public:
 	ARocket();
+	UFUNCTION(BlueprintPure, BlueprintCallable)
 	UPIDController* GetController();
+	UFUNCTION(BlueprintCallable)
 	void SetTarget(int Index);
-	UPROPERTY(EditAnywhere, Category="PID")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="PID")
 	float Power;
 	UPROPERTY(EditAnywhere, Category="Components")
 	float FlameSize;
 
 protected:
 	virtual void BeginPlay() override;
-	TWeakObjectPtr<UShapeComponent> RootComponent;
-	UPROPERTY(EditAnywhere, Category="PID")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="PID")
 	UPIDController* Controller;
 	UPROPERTY(EditAnywhere, Category="Targets")
 	TArray<AActor*> Targets;
 	TArray<FVector> TargetPositions;
+	UPROPERTY(EditAnywhere, Category="Targets")
 	FVector TargetPosition;
 	void SetScale(UStaticMeshComponent* Mesh, float Scale);
 };

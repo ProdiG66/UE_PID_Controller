@@ -13,22 +13,27 @@ class UE_PID_CONTROLLER_API UPIDController : public UActorComponent {
 public:
 	UPIDController();
 
-	UPROPERTY(EditAnywhere, Category="PID Coefficients")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="PID Coefficients")
 	float ProportionalGain = 3;
-	UPROPERTY(EditAnywhere, Category="PID Coefficients")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="PID Coefficients")
 	float IntegralGain = 6;
-	UPROPERTY(EditAnywhere, Category="PID Coefficients")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="PID Coefficients")
 	float DerivativeGain = 3;
 
 	float OutputMin = -1;
 	float OutputMax = 1;
-	UPROPERTY(EditAnywhere, Category="PID Coefficients")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="PID Coefficients")
 	float IntegralSaturation = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="PID Coefficients")
 	EDerivativeMeasurement DerivativeMeasurement;
 
+	UPROPERTY(BlueprintReadOnly)
 	float ValueLast;
+	UPROPERTY(BlueprintReadOnly)
 	float ErrorLast;
+	UPROPERTY(BlueprintReadOnly)
 	float IntegrationStored;
+	UPROPERTY(BlueprintReadOnly)
 	float Velocity;
 	bool DerivativeInitialized;
 	void Reset();
