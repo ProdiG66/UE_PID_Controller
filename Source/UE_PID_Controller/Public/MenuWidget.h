@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PIDControllerMenu.h"
 #include "Rocket.h"
 #include "GameFramework/Actor.h"
 #include "MenuWidget.generated.h"
@@ -15,4 +16,6 @@ public:
 	AMenuWidget();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default")
 	ARocket* Rocket;
+	UFUNCTION(BlueprintCallable)
+	void SetRocket(UPIDControllerMenu* Menu);
 };

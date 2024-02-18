@@ -6,3 +6,7 @@
 AMenuWidget::AMenuWidget() {
 	PrimaryActorTick.bCanEverTick = true;
 }
+
+void AMenuWidget::SetRocket(UPIDControllerMenu* Menu) {
+	Menu->Rocket = Rocket;
+}

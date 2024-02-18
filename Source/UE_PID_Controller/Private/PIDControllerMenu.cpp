@@ -2,3 +2,7 @@
 
 
 #include "PIDControllerMenu.h"
+
+ARocket* UPIDControllerMenu::GetRocket() {
+	return Rocket;
+}

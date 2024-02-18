@@ -17,4 +17,6 @@ class UE_PID_CONTROLLER_API UPIDControllerMenu : public UUserWidget {
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Default")
 	ARocket* Rocket;
+	UFUNCTION(BlueprintPure, BlueprintCallable)
+	ARocket* GetRocket();
 };
